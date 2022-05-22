@@ -49,8 +49,8 @@ find /sbin /usr/sbin ! -type d \
 # Remove world-writable permissions.
 # This breaks apps that need to write to /tmp,
 # such as ssh-agent.
-find / -xdev -type d -perm +0002 -exec chmod o-w {} +
-find / -xdev -type f -perm +0002 -exec chmod o-w {} +
+find / -xdev -type d -perm /0002 -exec chmod o-w {} +
+find / -xdev -type f -perm /0002 -exec chmod o-w {} +
 
 # Remove unnecessary user accounts.
 sed -i -r '/^(user|root|sshd)/!d' /etc/group
