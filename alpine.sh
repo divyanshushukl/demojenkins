@@ -82,7 +82,7 @@ find $sysdirs -xdev -type d \
   -exec chmod 0755 {} \;
 
 # Remove all suid files.
-find $sysdirs -xdev -type f -a -perm +4000 -delete
+find $sysdirs -xdev -type f -a -perm /4000 -delete
 
 # Remove other programs that could be dangerous.
 find $sysdirs -xdev \( \
