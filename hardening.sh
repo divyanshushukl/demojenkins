@@ -29,32 +29,32 @@ find / -xdev -type d -perm +0002 -exec chmod o-w {} + \
   && chown $APP_USER:root /tmp/
 
 # Remove unnecessary user accounts.
-#sed -i -r '/^(ubuntu|root|sshd)/!d' /etc/group
-#sed -i -r '/^(ubuntu|root|sshd)/!d' /etc/passwd
+sed -i -r '/^(ubuntu|root|sshd)/!d' /etc/group
+sed -i -r '/^(ubuntu|root|sshd)/!d' /etc/passwd
 
 # Remove interactive login shell for everybody but user.
-#sed -i -r '/^ubuntu:/! s#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
+sed -i -r '/^ubuntu:/! s#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
 
 
 # Disable password login for everybody
 #while IFS=: read -r username _; do passwd -l "$username"; done < /etc/passwd || true
 
 #sysdirs="
-#   /bin
-#   /etc
-#   /lib
-#   /usr
-#   /usr/bin
-# "
+  /bin
+  /etc
+  /lib
+  /usr
+  /usr/bin
+"
 
 # Remove apk configs.
-#find $sysdirs -xdev -regex '.*apk.*' -exec rm -fr {} +
+find $sysdirs -xdev -regex '.*apk.*' -exec rm -fr {} +
 
 # Remove crufty...
-#   /etc/shadow-
-#   /etc/passwd-
-#   /etc/group-
-#find $sysdirs -xdev -type f -regex '.*-$' -exec rm -f {} +
+  /etc/shadow-
+  /etc/passwd-
+  /etc/group-
+find $sysdirs -xdev -type f -regex '.*-$' -exec rm -f {} +
 
 # Ensure system dirs are owned by root and not writable by anybody else.
 find $sysdirs -xdev -type d \
@@ -87,9 +87,9 @@ rm -f /etc/fstab
 find $sysdirs -xdev -type l -exec test ! -e {} \; -delete
 
 # Improve strength of diffie-hellman-group-exchange-sha256 (Custom DH with SHA2).
-# moduli=/etc/ssh/moduli
-# if [[ -f ${moduli} ]]; then
-#   cp ${moduli} ${moduli}.orig
-#   awk '$5 >= 2000' ${moduli}.orig > ${moduli}
-#   rm -f ${moduli}.orig
-# fi
+moduli=/etc/ssh/moduli
+if [[ -f ${moduli} ]]; then
+  cp ${moduli} ${moduli}.orig
+  awk '$5 >= 2000' ${moduli}.orig > ${moduli}
+  rm -f ${moduli}.orig
+fi
